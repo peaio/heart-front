@@ -64,15 +64,19 @@ export const constantRoutes = [
     children: [
       {
         path: '',
-        name: 'Teacher',
         component: () => import('@/views/teacher/index'),
         meta: { title: '列表', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'add',
+        component: () => import('@/views/teacher/form'),
+        meta: { title: '新增', icon: 'form' }
+      },
+      {
+        path: 'edit/:id',
+        component: () => import('@/views/teacher/form'),
+        meta: { title: '编辑', icon: 'form' },
+        hidden: true
       }
     ]
   },
