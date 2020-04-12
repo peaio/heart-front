@@ -34,7 +34,7 @@
       <el-table-column prop="name" label="讲师姓名" width="120"></el-table-column>
       <el-table-column prop="avatar" label="头像" width="120">
         <template slot-scope="scope">
-          <img :src="scope.row.avatar+'?imageView2/1/w/80/h/80/interlace/1'" />
+          <img v-if="scope.row.avatar" :src="scope.row.avatar" width="80" height="80" />
         </template>
       </el-table-column>
       <el-table-column prop="level" label="头衔" width="120">
@@ -43,7 +43,7 @@
       <el-table-column prop="intro" label="讲师资历" width="300"></el-table-column>
       <el-table-column prop="career" label="讲师简介" width="400"></el-table-column>
       <el-table-column prop="sort" label="排序" width="50"></el-table-column>
-      <el-table-column prop="gmtCreate" label="创建时间" width="300" :formatter="dateTimeFormat"></el-table-column>
+      <el-table-column prop="gmtCreate" label="创建时间" width="200" :formatter="dateTimeFormat"></el-table-column>
       <el-table-column fixed="right" label="操作" width="120">
         <template slot-scope="scope">
           <router-link :to="'/teacher/edit/'+scope.row.id">

@@ -7,6 +7,18 @@
     >
       <el-input v-model="form.name" placeholder="教师姓名"></el-input>
     </el-form-item>
+    <el-form-item label="头像">
+      <el-upload
+        class="avatar-uploader"
+        action="http://localhost:8091/file/upload"
+        :show-file-list="false"
+        :on-success="handleAvatarSuccess"
+        :before-upload="beforeAvatarUpload"
+      >
+        <img v-if="form.avatar" :src="form.avatar" class="avatar" />
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      </el-upload>
+    </el-form-item>
     <el-form-item
       label="排序"
       prop="sort"
@@ -57,6 +69,7 @@ import teacher from "@/api/teacher";
 let defaultFormData = {
   id: null,
   name: "",
+  avatar: "",
   sort: 0,
   level: null,
   intro: "",
@@ -74,8 +87,8 @@ export default {
     };
   },
   mounted() {
-    if (this.$router.currentRoute.params.id) {
-      teacher.get(this.$router.currentRoute.params.id).then(res => {
+    if (this.$route.params.id) {
+      teacher.get(this.$route.params.id).then(res => {
         this.form = res.data;
       });
     }
@@ -100,10 +113,43 @@ export default {
             this.submitDisavled = false;
           });
       });
+    },
+    handleAvatarSuccess(res, file) {
+      this.form.avatar = res.data;
+    },
+    beforeAvatarUpload(file) {
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isLt2M;
     }
   }
 };
 </script>
 
 <style>
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 </style>
