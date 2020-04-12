@@ -91,7 +91,8 @@ export const constantRoutes = [
         component: () => import('@/views/form/index'),
         meta: { title: 'Form', icon: 'form' }
       }
-    ]
+    ],
+    hidden: true
   },
 
   {
@@ -99,6 +100,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/nested/menu1',
     name: 'Nested',
+    hidden: true,
     meta: {
       title: 'Nested',
       icon: 'nested'
@@ -160,7 +162,8 @@ export const constantRoutes = [
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
         meta: { title: 'External Link', icon: 'link' }
       }
-    ]
+    ],
+    hidden: true
   },
 
   // 404 page must be placed at the end !!!

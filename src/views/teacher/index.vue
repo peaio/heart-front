@@ -30,7 +30,7 @@
         <el-button @click="clearQueryObj()">清空</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="pageData.data" style="width: 100%" max-height="100%" v-loading="listLoading">
+    <el-table :data="pageData.data" style="width: 100%" max-height="700" v-loading="listLoading">
       <el-table-column prop="name" label="讲师姓名" width="120"></el-table-column>
       <el-table-column prop="avatar" label="头像" width="120">
         <template slot-scope="scope">

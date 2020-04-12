@@ -1,5 +1,3 @@
-import commonRestful from '@/api/commonRestful'
+import commonApi from '@/api/common-api'
 
-commonRestful.basePath = 'teacher'
-
-export default commonRestful;
+export default commonApi.setApiName('teacher');
