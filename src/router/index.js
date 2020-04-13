@@ -82,17 +82,15 @@ export const constantRoutes = [
   },
 
   {
-    path: '/form',
+    path: '/subject',
     component: Layout,
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        path: '',
+        component: () => import('@/views/subject/index'),
+        meta: { title: '课程科目', icon: 'subject' }
       }
-    ],
-    hidden: true
+    ]
   },
 
   {

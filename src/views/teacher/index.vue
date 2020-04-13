@@ -49,7 +49,7 @@
           <router-link :to="'/teacher/edit/'+scope.row.id">
             <el-button type="text" size="small">编辑</el-button>
           </router-link>
-          <el-button @click.native.prevent="deleteData(scope.row.id)" type="text" size="small">删除</el-button>
+          <el-button @click.native.prevent="deleteById(scope.row.id)" type="text" size="small">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -71,7 +71,7 @@ import teacher from "@/api/teacher";
 import { parseTime } from "@/utils";
 const defaultQueryObj = {
   pageNumber: 1,
-  pageSize: 5
+  pageSize: 10
 };
 export default {
   data() {
@@ -118,7 +118,7 @@ export default {
           this.listLoading = false;
         });
     },
-    deleteData(id) {
+    deleteById(id) {
       this.$confirm("此操作将永久删除该教师, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
