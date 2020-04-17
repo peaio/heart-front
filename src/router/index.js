@@ -47,12 +47,14 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: 'dashboard' }
-    }]
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index'),
+        meta: { title: '首页', icon: 'dashboard' }
+      }
+    ]
   },
 
   {
@@ -88,11 +90,45 @@ export const constantRoutes = [
       {
         path: '',
         component: () => import('@/views/subject/index'),
-        meta: { title: '课程科目', icon: 'subject' }
+        meta: { title: '课程科目', icon: 'tree' }
       }
     ]
   },
-
+  {
+    path: '/course',
+    component: Layout,
+    meta: { title: '课程管理', icon: 'tree' },
+    children: [
+      {
+        path: '',
+        component: () => import('@/views/course/info'),
+        meta: { title: '课程发布', icon: 'tree' }
+      },
+      {
+        path: 'info',
+        component: () => import('@/views/course/info'),
+        meta: { title: '新增课程', icon: 'tree' }
+      },
+      {
+        path: 'info/:id',
+        component: () => import('@/views/course/info'),
+        meta: { title: '编辑课程基本信息', icon: 'tree' },
+        hidden: true
+      },
+      {
+        path: 'chapter/:id',
+        component: () => import('@/views/course/chapter'),
+        meta: { title: '编辑课程大纲', icon: 'tree' },
+        hidden: true
+      },
+      {
+        path: 'publish/:id',
+        component: () => import('@/views/course/publish'),
+        meta: { title: '完成', icon: 'tree' },
+        hidden: true
+      }
+    ]
+  },
   {
     path: '/nested',
     component: Layout,
@@ -124,13 +160,15 @@ export const constantRoutes = [
             children: [
               {
                 path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
+                component: () =>
+                  import('@/views/nested/menu1/menu1-2/menu1-2-1'),
                 name: 'Menu1-2-1',
                 meta: { title: 'Menu1-2-1' }
               },
               {
                 path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
+                component: () =>
+                  import('@/views/nested/menu1/menu1-2/menu1-2-2'),
                 name: 'Menu1-2-2',
                 meta: { title: 'Menu1-2-2' }
               }
@@ -168,11 +206,12 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
+  })
 
 const router = createRouter()
 
