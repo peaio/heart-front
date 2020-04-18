@@ -1,16 +1,20 @@
 <template>
   <div class="app-container">
     <el-form :inline="true">
-      <el-form-item label="讲师姓名">
-        <el-input v-model="queryObj.name" placeholder="讲师姓名" />
+      <el-form-item label="课程标题">
+        <el-input v-model="queryObj.title" placeholder="课程标题" />
       </el-form-item>
-      <el-form-item label="头衔">
-        <el-select v-model="queryObj.level" clearable placeholder="头衔">
+      <el-form-item label="课程讲师">
+        <el-select
+          v-model="queryObj.teacherId"
+          clearable
+          placeholder="课程讲师"
+        >
           <el-option
-            v-for="teacherLevel in teacherLevels"
-            :key="teacherLevel.id"
-            :value="teacherLevel.id"
-            :label="teacherLevel.name"
+            v-for="teacher in teacherList"
+            :key="teacher.id"
+            :value="teacher.id"
+            :label="teacher.name"
           />
         </el-select>
       </el-form-item>
@@ -44,25 +48,31 @@
       style="width: 100%"
       max-height="700"
     >
-      <el-table-column prop="name" label="讲师姓名" width="120" />
-      <el-table-column prop="avatar" label="头像" width="120">
+      <el-table-column prop="title" label="标题" width="200" />
+      <el-table-column prop="cover" label="封面" width="120">
         <template slot-scope="scope">
           <img
-            v-if="scope.row.avatar"
-            :src="scope.row.avatar"
-            width="80"
+            v-if="scope.row.cover"
+            :src="scope.row.cover"
+            width="100"
             height="80"
           />
         </template>
       </el-table-column>
-      <el-table-column prop="level" label="头衔" width="120">
+      <el-table-column prop="teacherName" label="讲师姓名" width="120" />
+      <el-table-column prop="status" label="课程状态" width="120">
         <template slot-scope="scope">
-          {{ scope.row.level === 1 ? '高级讲师' : '首席讲师' }}
+          {{ scope.row.status == 'Draft' ? '未发布' : '已发布' }}
         </template>
       </el-table-column>
-      <el-table-column prop="intro" label="讲师资历" width="300" />
-      <el-table-column prop="career" label="讲师简介" width="400" />
-      <el-table-column prop="sort" label="排序" width="50" />
+      <el-table-column prop="price" label="价格(元)" width="100" />
+      <el-table-column prop="buyCount" label="销售数量" width="100" />
+      <el-table-column
+        prop="gmtModified"
+        label="更新时间"
+        width="200"
+        :formatter="dateTimeFormat"
+      />
       <el-table-column
         prop="gmtCreate"
         label="创建时间"
@@ -71,7 +81,7 @@
       />
       <el-table-column fixed="right" label="操作" width="120">
         <template slot-scope="scope">
-          <router-link :to="'/teacher/edit/' + scope.row.id">
+          <router-link :to="'/course/info/' + scope.row.id">
             <el-button type="text" size="small">编辑</el-button>
           </router-link>
           <el-button
@@ -99,10 +109,11 @@
 
 <script>
 import teacher from '@/api/teacher'
+import course from '@/api/course'
 import { parseTime } from '@/utils'
 const defaultQueryObj = {
   pageNumber: 1,
-  pageSize: 10
+  pageSize: 5
 }
 export default {
   data() {
@@ -113,15 +124,15 @@ export default {
         data: [],
         totalElements: 0
       },
-      teacherLevels: [
-        { id: 1, name: '高级讲师' },
-        { id: 2, name: '首席讲师' }
-      ],
+      teacherList: [],
       listLoading: false
     }
   },
   mounted() {
     this.fetchList()
+    teacher.list().then(res => {
+      this.teacherList = res.data
+    })
   },
   methods: {
     currentChange(currentPage) {
@@ -141,7 +152,7 @@ export default {
         this.queryObj.endGmtCreate = this.createTimeRange[1]
       }
       this.listLoading = true
-      teacher
+      course
         .list(this.queryObj)
         .then(res => {
           this.pageData = res
@@ -152,13 +163,13 @@ export default {
         })
     },
     deleteById(id) {
-      this.$confirm('此操作将永久删除该教师, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该课程, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       })
         .then(() => {
-          teacher.del(id).then(res => {
+          course.del(id).then(res => {
             this.fetchList()
             this.$message({
               type: 'success',

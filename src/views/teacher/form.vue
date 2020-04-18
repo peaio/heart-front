@@ -16,7 +16,7 @@
     <el-form-item label="头像">
       <el-upload
         class="avatar-uploader"
-        action="http://localhost:8091/file/upload"
+        :action="oss_api"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
@@ -71,11 +71,9 @@
     </el-form-item>
 
     <el-form-item>
-      <el-button
-        type="primary"
-        :disabled="submitDisavled"
-        @click="onSubmit"
-      >保存</el-button>
+      <el-button type="primary" :disabled="submitDisavled" @click="onSubmit">
+        保存
+      </el-button>
       <router-link to="/teacher">
         <el-button>返回</el-button>
       </router-link>
@@ -102,7 +100,8 @@ export default {
         { id: 1, name: '高级讲师' },
         { id: 2, name: '首席讲师' }
       ],
-      submitDisavled: false
+      submitDisavled: false,
+      oss_api: `${process.env.VUE_APP_OSS_BASE_API}/file/upload`
     }
   },
   mounted() {

@@ -52,7 +52,7 @@ export const constantRoutes = [
         path: 'dashboard',
         name: 'Dashboard',
         component: () => import('@/views/dashboard/index'),
-        meta: { title: '首页', icon: 'dashboard' }
+        meta: { title: '首页', icon: 'home' }
       }
     ]
   },
@@ -62,7 +62,7 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/teacher',
     name: 'Teacher',
-    meta: { title: '教师管理', icon: 'example' },
+    meta: { title: '教师管理', icon: 'teacher' },
     children: [
       {
         path: '',
@@ -90,41 +90,41 @@ export const constantRoutes = [
       {
         path: '',
         component: () => import('@/views/subject/index'),
-        meta: { title: '课程科目', icon: 'tree' }
+        meta: { title: '课程科目', icon: 'subject' }
       }
     ]
   },
   {
     path: '/course',
     component: Layout,
-    meta: { title: '课程管理', icon: 'tree' },
+    meta: { title: '课程管理', icon: 'course' },
     children: [
       {
         path: '',
-        component: () => import('@/views/course/info'),
-        meta: { title: '课程发布', icon: 'tree' }
+        component: () => import('@/views/course/list'),
+        meta: { title: '课程列表', icon: 'table' }
       },
       {
         path: 'info',
         component: () => import('@/views/course/info'),
-        meta: { title: '新增课程', icon: 'tree' }
+        meta: { title: '新增课程', icon: 'form' }
       },
       {
         path: 'info/:id',
         component: () => import('@/views/course/info'),
-        meta: { title: '编辑课程基本信息', icon: 'tree' },
+        meta: { title: '编辑课程基本信息', icon: 'edit' },
         hidden: true
       },
       {
         path: 'chapter/:id',
         component: () => import('@/views/course/chapter'),
-        meta: { title: '编辑课程大纲', icon: 'tree' },
+        meta: { title: '编辑课程大纲', icon: 'edit' },
         hidden: true
       },
       {
         path: 'publish/:id',
         component: () => import('@/views/course/publish'),
-        meta: { title: '完成', icon: 'tree' },
+        meta: { title: '完成', icon: 'form' },
         hidden: true
       }
     ]

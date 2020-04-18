@@ -22,7 +22,7 @@
       >
         <el-upload
           class="avatar-uploader"
-          action="http://localhost:8091/file/upload"
+          :action="oss_api"
           :show-file-list="false"
           :on-success="uploadSuccessCover"
           :before-upload="beforeUploadCover"
@@ -80,7 +80,9 @@
     </el-form>
 
     <div class="centerDiv">
-      <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
+      <el-button style="margin-top: 12px;" @click="next">
+        保存并下一步
+      </el-button>
     </div>
   </div>
 </template>
@@ -98,7 +100,8 @@ export default {
       form: {
         lessonNum: 1,
         price: 1,
-        courseDescription: {}
+        courseDescription: {},
+        cover: ''
       },
       cascaderValues: [],
       tree: [],
@@ -107,10 +110,12 @@ export default {
         children: 'children',
         label: 'title',
         value: 'id'
-      }
+      },
+      oss_api: `${process.env.VUE_APP_OSS_BASE_API}/file/upload`
     }
   },
   mounted() {
+    console.log(process.env.VUE_APP_OSS_BASE_API)
     if (this.$route.params.id) {
       course.get(this.$route.params.id).then(res => {
         this.form = res.data
