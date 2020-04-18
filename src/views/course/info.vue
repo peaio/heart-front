@@ -115,7 +115,6 @@ export default {
     }
   },
   mounted() {
-    console.log(process.env.VUE_APP_OSS_BASE_API)
     if (this.$route.params.id) {
       course.get(this.$route.params.id).then(res => {
         this.form = res.data

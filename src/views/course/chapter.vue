@@ -7,6 +7,7 @@
       <el-step title="创建课程大纲" />
       <el-step title="发布课程" />
     </el-steps>
+    <chapter-list :course-id="courseId" />
 
     <div class="centerDiv">
       <el-button style="margin-top: 12px;" @click="previous">上一步</el-button>
@@ -16,18 +17,22 @@
 </template>
 
 <script>
+import chapterList from '@/views/course/components/chapter-list'
 export default {
+  components: { chapterList },
   data() {
     return {
-      active: 1
+      active: 1,
+      courseId: this.$route.params.id
     }
   },
+  mounted() {},
   methods: {
     previous() {
       this.$router.push('/course/info/' + this.$route.params.id)
     },
     next() {
-      this.$router.push('/course/publish/' + 2)
+      this.$router.push('/course/publish/' + this.$route.params.id)
     }
   }
 }

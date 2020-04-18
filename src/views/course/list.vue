@@ -82,7 +82,10 @@
       <el-table-column fixed="right" label="操作" width="120">
         <template slot-scope="scope">
           <router-link :to="'/course/info/' + scope.row.id">
-            <el-button type="text" size="small">编辑</el-button>
+            <el-button type="text" size="small">编辑基础信息</el-button>
+          </router-link>
+          <router-link :to="'/course/chapter/' + scope.row.id">
+            <el-button type="text" size="small">编辑课程大纲</el-button>
           </router-link>
           <el-button
             type="text"
