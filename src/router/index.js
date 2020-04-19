@@ -100,7 +100,7 @@ export const constantRoutes = [
     meta: { title: '课程管理', icon: 'course' },
     children: [
       {
-        path: '',
+        path: 'list',
         component: () => import('@/views/course/list'),
         meta: { title: '课程列表', icon: 'table' }
       },

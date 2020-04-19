@@ -62,7 +62,10 @@
       <el-table-column prop="teacherName" label="讲师姓名" width="120" />
       <el-table-column prop="status" label="课程状态" width="120">
         <template slot-scope="scope">
-          {{ scope.row.status == 'Draft' ? '未发布' : '已发布' }}
+          <el-tag v-if="scope.row.status == 'Draft'" type="warning">
+            未发布
+          </el-tag>
+          <el-tag v-else type="success">已发布</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="price" label="价格(元)" width="100" />
@@ -112,7 +115,7 @@
 
 <script>
 import teacher from '@/api/teacher'
-import course from '@/api/course'
+import course from '@/api/edu/course'
 import { parseTime } from '@/utils'
 const defaultQueryObj = {
   pageNumber: 1,
